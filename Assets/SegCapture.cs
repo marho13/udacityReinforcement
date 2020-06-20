@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SegCapture : MonoBehaviour
@@ -8,18 +7,18 @@ public class SegCapture : MonoBehaviour
     public string timeNow = "";
     private bool takeScreenshotOnNextFrame;
     private static SegCapture instance;
-    private Camera myCamera;
+    public Camera myCamera;
+    public ArrayList ImagesList;
 
     private void Awake()
     {
         instance = this;
-        myCamera = gameObject.GetComponent<Camera>();
+        //myCamera = gameObject.GetComponent<Camera>();
+        //myCamera.enabled = true;
     }
-    private void OnPostRender()
+    public void OnPostRender()
     {
-        if (takeScreenshotOnNextFrame)
-        {
-            Debug.Log(timeNow);
+        if (takeScreenshotOnNextFrame) { 
             takeScreenshotOnNextFrame = false;
             RenderTexture renderTexture = myCamera.targetTexture;
 
@@ -28,25 +27,37 @@ public class SegCapture : MonoBehaviour
             renderResult.ReadPixels(rect, 0, 0);
 
             byte[] byteArray = renderResult.EncodeToPNG();
-            System.IO.File.WriteAllBytes(folder + "/" + timeNow + ".png", byteArray);
-            Debug.Log("Saved CameraScreenshot.png");
+            ImagesList.Add(byteArray);
+            Debug.Log(ImagesList.Count);
+            //System.IO.File.WriteAllBytes(folder + "/" + timeNow + ".png", byteArray);
+            //Debug.Log("Saved CameraScreenshot.png");
 
             RenderTexture.ReleaseTemporary(renderTexture);
             myCamera.targetTexture = null;
+            Debug.Log("Segmentation done");
         }
+    }
+
+    IEnumerator saveImages()
+    {
+        foreach (byte il in ImagesList)
+        {
+            Debug.Log(il);
+        }
+        yield return null;
     }
 
     private void TakeScreenshot(int width, int height, string time)
     {
+        Debug.Log("Onmyway");
         timeNow = time;
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
         takeScreenshotOnNextFrame = true;
-        Debug.Log("Taking Screenshot");
     }
 
     public static void TakeScreenshot_Static(int width, int height, string time)
     {
-        Debug.Log("In static");
+        Debug.Log("Segmentation init");
         instance.TakeScreenshot(width, height, time);
     }
 }
