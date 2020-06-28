@@ -32,7 +32,6 @@ public class SegCapture : MonoBehaviour
             Rect rect = new Rect(0, 0, renderTexture.width, renderTexture.height);
             renderResult.ReadPixels(rect, 0, 0);
 
-            
             ImagesList.Add(DateTime.Now.Ticks.ToString(), renderResult);
 
             RenderTexture.ReleaseTemporary(renderTexture);
