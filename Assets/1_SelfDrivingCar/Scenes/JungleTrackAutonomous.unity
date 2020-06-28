@@ -1923,7 +1923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   folder: D://Screenshots/Image/
-  timeNow: 
+  imgNum: 
   myCamera: {fileID: 185430338}
 --- !u!1001 &193650640
 Prefab:
@@ -6316,7 +6316,6 @@ GameObject:
   m_Component:
   - component: {fileID: 552778759}
   - component: {fileID: 552778760}
-  - component: {fileID: 552778764}
   m_Layer: 0
   m_Name: SegCar
   m_TagString: Player
@@ -6362,20 +6361,6 @@ MonoBehaviour:
   vehicle: {fileID: 284866812}
   offset: {x: 0, y: 0, z: 0}
   that: {x: 0, y: 0, z: 0}
---- !u!114 &552778764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 552778758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbfc2cfde1eba9f4f9f882f7993f074a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  folder: D://Screenshots/SegImage/
-  timeNow: 
-  myCamera: {fileID: 1958591300}
 --- !u!4 &563542844 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 437110, guid: 4d9cb2c390cb4b24a857eafb457a8ce3,
@@ -6585,7 +6570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segFolder: D://Screenshots/SegImage
   folder: D://Screenshots/Image
-  timeNow: 
+  imgNum: 1
   fileName: 
   cam: {fileID: 185430338}
   segCam: {fileID: 1958591300}
@@ -24027,10 +24012,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1958591293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a37db6302fafcc42b81cb143b583fa3, type: 3}
+  m_Script: {fileID: 11500000, guid: cbfc2cfde1eba9f4f9f882f7993f074a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  folder: D://Screenshots/Image/
+  folder: D://Screenshots/SegImage/
   timeNow: 
   myCamera: {fileID: 1958591300}
 --- !u!114 &1958591296

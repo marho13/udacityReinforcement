@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 using UnityScript.Lang;
@@ -8,7 +9,7 @@ public class storeImages : MonoBehaviour
 {
     public string segFolder = "D://Screenshots/SegImage/";
     public string folder = "D://Screenshots/Image/";
-    public string timeNow;
+    public int imgNum = 1;
     public string fileName;
 
     public Camera cam;
@@ -39,7 +40,6 @@ public class storeImages : MonoBehaviour
 
     public void AddFileName(string timeName) 
     {
-        Debug.Log(timeName);
         fileNameList.Add(timeName);
     }
 
@@ -54,11 +54,14 @@ public class storeImages : MonoBehaviour
             createDirectory();
         }
 
-        //AddFileName(System.DateTime.Now.ToString("hhmmss"));
-        timeNow = System.DateTime.Now.ToString("MM/dd/hhmmss");
-        AddFileName(timeNow);
-        SegCapture.TakeScreenshot_Static(720, 480, timeNow);
-        //ImageCapture.TakeScreenshot_Static(720, 480, timeNow);
-        
+        captureImages(720, 480, imgNum.ToString());
+    }
+
+    public async void captureImages(int width, int height, string timeNow)
+    {
+        // get the stuff on another thread 
+        //await Task.Run(() => segmentationCapture.TakeScreenshot_Static(width, height, timeNow));
+        SegCapture.TakeScreenshot_Static(width, height, timeNow);
+        await Task.Run(() => ImageCapture.TakeScreenshot_Static(width, height, timeNow));
     }
 }
