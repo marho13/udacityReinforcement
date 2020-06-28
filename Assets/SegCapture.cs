@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class SegCapture : MonoBehaviour
 {
-    public string folder = "D://Screenshots/SegImage/";
+    public static string folder = "D://Screenshots/SegImage/";
     public string timeNow = "";
     private bool takeScreenshotOnNextFrame;
     private static SegCapture instance;
+    
     public Camera myCamera;
-    public List<List<byte>> ImagesList;
+    public static Dictionary<string, Texture2D> ImagesList = new Dictionary<string, Texture2D>();
     public List<byte> tempList;
 
     private void Awake()
@@ -29,36 +30,24 @@ public class SegCapture : MonoBehaviour
 
             Texture2D renderResult = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
             Rect rect = new Rect(0, 0, renderTexture.width, renderTexture.height);
-            
             renderResult.ReadPixels(rect, 0, 0);
 
-            byte[] byteArray = renderResult.EncodeToPNG();
-            Debug.Log(byteArray.Length);
-            foreach (byte b in byteArray)
-            {
-                tempList.Add(b);
-            }
-            ImagesList.Add(tempList);
-            Debug.Log(ImagesList.Count);
-            //System.IO.File.WriteAllBytes(folder + "/" + timeNow + ".png", byteArray);
-            //Debug.Log("Saved CameraScreenshot.png");
+            
+            ImagesList.Add(DateTime.Now.Ticks.ToString(), renderResult);
 
             RenderTexture.ReleaseTemporary(renderTexture);
             myCamera.targetTexture = null;
-            Debug.Log("Segmentation done");
         }
     }
 
-    IEnumerator saveImages()
+    public static void SaveImages()
     {
-        foreach (List<byte> image in imageList)
+        foreach (var texture2D in ImagesList)
         {
-            foreach (byte il in image)
-            {
-                Debug.Log(il);
-            }
+            byte[] byteArray = texture2D.Value.EncodeToPNG();
+            System.IO.File.WriteAllBytes(folder + "/" + texture2D.Key + ".png", byteArray);
         }
-        yield return null;
+        ImagesList.Clear();
     }
 
     private void TakeScreenshot(int width, int height, string time)

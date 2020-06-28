@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
-using UnityScript.Lang;
 
 public class storeImages : MonoBehaviour
 {
@@ -17,6 +14,8 @@ public class storeImages : MonoBehaviour
 
     public List<string> fileNameList;
 
+    private bool CaptureImages = true;
+
 
     public string day = System.DateTime.Now.ToString("MM/dd");
 
@@ -27,6 +26,8 @@ public class storeImages : MonoBehaviour
         cam.enabled = false;
         segCam.enabled = true;
         createDirectory();
+
+        StartCoroutine(CaptureSegments());
     }
 
     private void createDirectory() 
@@ -54,14 +55,40 @@ public class storeImages : MonoBehaviour
             createDirectory();
         }
 
-        captureImages(720, 480, imgNum.ToString());
+        if (Input.GetKeyDown(KeyCode.N))
+            CaptureImages = false;
+
     }
 
-    public async void captureImages(int width, int height, string timeNow)
+    private IEnumerator CaptureSegments()
+    {
+        while (true)
+        {
+            while (CaptureImages)
+            {
+                captureImages(720, 480, imgNum.ToString());
+                yield return new WaitForSeconds(0.2f);
+                Debug.Log("Catupring");
+            }
+
+            SaveImages();
+            CaptureImages = true;
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return null;
+    }
+
+    private void captureImages(int width, int height, string timeNow)
     {
         // get the stuff on another thread 
-        //await Task.Run(() => segmentationCapture.TakeScreenshot_Static(width, height, timeNow));
+        // await Task.Run(() => segmentationCapture.TakeScreenshot_Static(width, height, timeNow));
         SegCapture.TakeScreenshot_Static(width, height, timeNow);
-        await Task.Run(() => ImageCapture.TakeScreenshot_Static(width, height, timeNow));
+        // await Task.Run(() => ImageCapture.TakeScreenshot_Static(width, height, timeNow));
+    }
+
+    private void SaveImages()
+    {
+        SegCapture.SaveImages();
     }
 }
