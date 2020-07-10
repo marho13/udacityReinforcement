@@ -3,7 +3,7 @@
          _MainTex ("Base (RGB)", 2D) = "white" {}
          _MinColor ("Color in Minimal", Color) = (1, 1, 1, 1)
          _MaxColor ("Color in Maxmal", Color) = (0, 0, 0, 0)
-         _MinDistance ("Min Distance", Float) = 100
+         _MinDistance ("Min Distance", Float) = 0
          _MaxDistance ("Max Distance", Float) = 1000
      }
      SubShader {

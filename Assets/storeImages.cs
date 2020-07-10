@@ -23,7 +23,7 @@ public class storeImages : MonoBehaviour
     
     public void Start()
     {
-        cam.enabled = false;
+        cam.enabled = true;
         segCam.enabled = true;
         createDirectory();
 
@@ -81,14 +81,13 @@ public class storeImages : MonoBehaviour
 
     private void captureImages(int width, int height, string timeNow)
     {
-        // get the stuff on another thread 
-        // await Task.Run(() => segmentationCapture.TakeScreenshot_Static(width, height, timeNow));
+        ImageCapture.TakeScreenshot_Static(width, height, timeNow);
         SegCapture.TakeScreenshot_Static(width, height, timeNow);
-        // await Task.Run(() => ImageCapture.TakeScreenshot_Static(width, height, timeNow));
     }
 
     private void SaveImages()
     {
         SegCapture.SaveImages();
+        ImageCapture.SaveImages();
     }
 }

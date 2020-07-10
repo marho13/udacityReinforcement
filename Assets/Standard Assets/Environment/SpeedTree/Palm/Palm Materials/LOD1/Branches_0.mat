@@ -33,11 +33,11 @@ Material:
     m_Floats:
     - _Cull: 2
     - _Cutoff: 0.33
-    - _MaxDistance: 100
+    - _MaxDistance: 1000
     - _MinDistance: 0
     - _WindQuality: 5
     m_Colors:
     - _Color: {r: 1, g: 0.09803922, b: 0, a: 1}
     - _HueVariation: {r: 1, g: 0.09803922, b: 0, a: 1}
     - _MaxColor: {r: 0.13207549, g: 0.11873453, b: 0, a: 0}
-    - _MinColor: {r: 1, g: 0.80021334, b: 0, a: 1}
+    - _MinColor: {r: 1, g: 1, b: 0, a: 1}

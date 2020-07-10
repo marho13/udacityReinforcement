@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: EnvDepth
   m_Shader: {fileID: 4800000, guid: e0163154a60d5ba48a44f8784988370b, type: 3}
   m_ShaderKeywords: 
@@ -23,8 +24,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _MaxDistance: 100
-    - _MinDistance: 0
+    - _MaxDistance: 10000
+    - _MinDistance: 150
     m_Colors:
     - _MaxColor: {r: 0.11320752, g: 0, b: 0.019112924, a: 0}
-    - _MinColor: {r: 1, g: 0.3820755, b: 0.3820755, a: 1}
+    - _MinColor: {r: 1, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []

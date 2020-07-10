@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class SegCapture : MonoBehaviour
 {
-    public static string folder = "D://Screenshots/SegImage/";
+    public static string segfolder = "D://Screenshots/SegImage/";
     public string timeNow = "";
     private bool takeScreenshotOnNextFrame;
     private static SegCapture instance;
     
-    public Camera myCamera;
-    public static Dictionary<string, Texture2D> ImagesList = new Dictionary<string, Texture2D>();
+    public Camera mySegCamera;
+    public static Dictionary<string, Texture2D> segImagesList = new Dictionary<string, Texture2D>();
     public List<byte> tempList;
 
     private void Awake()
@@ -26,34 +26,35 @@ public class SegCapture : MonoBehaviour
         if (takeScreenshotOnNextFrame) { 
             takeScreenshotOnNextFrame = false;
 
-            RenderTexture renderTexture = myCamera.targetTexture;
+            RenderTexture renderTexture = mySegCamera.targetTexture;
 
             Texture2D renderResult = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
             Rect rect = new Rect(0, 0, renderTexture.width, renderTexture.height);
             renderResult.ReadPixels(rect, 0, 0);
 
-            ImagesList.Add(DateTime.Now.Ticks.ToString(), renderResult);
+            segImagesList.Add(DateTime.Now.Ticks.ToString(), renderResult);
 
             RenderTexture.ReleaseTemporary(renderTexture);
-            myCamera.targetTexture = null;
+            mySegCamera.targetTexture = null;
         }
     }
 
     public static void SaveImages()
     {
-        foreach (var texture2D in ImagesList)
+        string mmdd = DateTime.Now.ToString("MM/dd");
+        foreach (var segtexture2D in segImagesList)
         {
-            byte[] byteArray = texture2D.Value.EncodeToPNG();
-            System.IO.File.WriteAllBytes(folder + "/" + texture2D.Key + ".png", byteArray);
+            byte[] segbyteArray = segtexture2D.Value.EncodeToPNG();
+            System.IO.File.WriteAllBytes(segfolder + "/" + mmdd + "/" + segtexture2D.Key + ".png", segbyteArray);
         }
-        ImagesList.Clear();
+        segImagesList.Clear();
     }
 
     private void TakeScreenshot(int width, int height, string time)
     {
         //Debug.Log("Onmyway");
         timeNow = time;
-        myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
+        mySegCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
         takeScreenshotOnNextFrame = true;
     }
 
