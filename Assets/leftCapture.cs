@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImageCapture : MonoBehaviour
+public class leftCapture : MonoBehaviour
 {
-    public static string folder = "D://Screenshots/SegImage/";
+    public static string folder = "D://Screenshots/Image/Right";
     public string imgNum = "";
     private bool takeScreenshotOnNextFrame;
     private static ImageCapture instance;

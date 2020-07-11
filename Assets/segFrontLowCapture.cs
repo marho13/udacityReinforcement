@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImageCapture : MonoBehaviour
+public class segFrontLowCapture : MonoBehaviour
 {
     public static string folder = "D://Screenshots/SegImage/";
     public string imgNum = "";
