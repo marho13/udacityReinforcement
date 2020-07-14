@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Leaves_3
   m_Shader: {fileID: 4800000, guid: e0163154a60d5ba48a44f8784988370b, type: 3}
   m_ShaderKeywords: EFFECT_BUMP EFFECT_HUE_VARIATION GEOM_TYPE_LEAF
@@ -41,3 +42,4 @@ Material:
     - _HueVariation: {r: 1, g: 0.09803922, b: 0, a: 1}
     - _MaxColor: {r: 0.13207549, g: 0.11873453, b: 0, a: 0}
     - _MinColor: {r: 1, g: 0.80021334, b: 0, a: 1}
+  m_BuildTextureStacks: []

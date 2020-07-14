@@ -1,13 +1,14 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class leftCapture : MonoBehaviour
 {
-    public static string folder = "D://Screenshots/Image/Right";
+    public static string folder = "D://Screenshots/Image/Left/";
     public string imgNum = "";
     private bool takeScreenshotOnNextFrame;
-    private static ImageCapture instance;
+    private static leftCapture instance;
     public Camera myCamera;
     public static Dictionary<string, Texture2D> ImagesList = new Dictionary<string, Texture2D>();
 

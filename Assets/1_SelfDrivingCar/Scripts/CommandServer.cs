@@ -21,7 +21,6 @@ public class CommandServer : MonoBehaviour
     public bool resetEnv = false;
     public int straightCheckpoint = 0;
     public int nonStraightCheckpoint = 0;
-    public CheckWheel checky;
     public checkpoint checkpoint;
     public float reward = 0.0f;
     public int offRoadInt = 0;
@@ -60,7 +59,6 @@ public class CommandServer : MonoBehaviour
 		//    print(float.Parse(jsonObject.GetField("steering_angle").str));
 		CarRemoteControl.SteeringAngle = float.Parse(jsonObject.GetField("steering_angle").str);
 		CarRemoteControl.Acceleration = float.Parse(jsonObject.GetField("throttle").str);
-        checky.wheelRunner();
         Collide = checkpoint.stuckCheck();
         wheelCheck();
         Debug.Log(onRoad);

@@ -9,8 +9,14 @@ public class storeImages : MonoBehaviour
     public int imgNum = 1;
     public string fileName;
 
-    public Camera cam;
-    public Camera segCam;
+    public Camera camFront;
+    public Camera camRight;
+    public Camera camLeft;
+    public Camera camBack;
+    public Camera segCamFront;
+    public Camera segCamRight;
+    public Camera segCamLeft;
+    public Camera segCamBack;
 
     public List<string> fileNameList;
 
@@ -23,8 +29,14 @@ public class storeImages : MonoBehaviour
     
     public void Start()
     {
-        cam.enabled = true;
-        segCam.enabled = true;
+        camFront.enabled = true;
+        camRight.enabled = true;
+        camLeft.enabled = true;
+        camBack.enabled = true;
+        segCamFront.enabled = true;
+        segCamRight.enabled = true;
+        segCamLeft.enabled = true;
+        segCamBack.enabled = true;
         createDirectory();
 
         StartCoroutine(CaptureSegments());
@@ -46,11 +58,6 @@ public class storeImages : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        {
-            cam.enabled = !cam.enabled;
-            segCam.enabled = !segCam.enabled;
-        }
         if (System.DateTime.Now.ToString("MM/dd") != day) {
             createDirectory();
         }
@@ -81,13 +88,28 @@ public class storeImages : MonoBehaviour
 
     private void captureImages(int width, int height, string timeNow)
     {
-        ImageCapture.TakeScreenshot_Static(width, height, timeNow);
-        SegCapture.TakeScreenshot_Static(width, height, timeNow);
+        backLowCapture.TakeScreenshot_Static(width, height, timeNow);
+        frontLowCaputre.TakeScreenshot_Static(width, height, timeNow);
+        leftCapture.TakeScreenshot_Static(width, height, timeNow);
+        rightCapture.TakeScreenshot_Static(width, height, timeNow);
+
+        segBackLowCapture.TakeScreenshot_Static(width, height, timeNow);
+        segFrontLowCapture.TakeScreenshot_Static(width, height, timeNow);
+        segLeftCapture.TakeScreenshot_Static(width, height, timeNow);
+        segRightCapture.TakeScreenshot_Static(width, height, timeNow);
     }
 
     private void SaveImages()
     {
-        SegCapture.SaveImages();
-        ImageCapture.SaveImages();
+        backLowCapture.SaveImages();
+        frontLowCaputre.SaveImages();
+        leftCapture.SaveImages();
+        rightCapture.SaveImages();
+
+        segBackLowCapture.SaveImages();
+        segLeftCapture.SaveImages();
+        segBackLowCapture.SaveImages();
+        segFrontLowCapture.SaveImages();
+
     }
 }
