@@ -1,4 +1,4 @@
-# udacityReinforcement
+# Udacity Reinforcement
 Reinforcement implementation of udacitys self-driving car simulation:
 https://github.com/udacity/self-driving-car-sim
 Coding changes are in the Assets/1_SelfDrivingCar/Scripts folder
