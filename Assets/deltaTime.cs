@@ -23,7 +23,14 @@ public class deltaTime : MonoBehaviour
                 Time.timeScale = 1.0f;
             // Adjust fixed delta time according to timescale
             // The fixed delta time will now be 0.02 frames per real-time second
-            Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
+            if (Time.timeScale < 1.0)
+            {
+                Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
+            }
+            else
+            {
+                Time.fixedDeltaTime = this.fixedDeltaTime;
+            }
         }
     }
 }
