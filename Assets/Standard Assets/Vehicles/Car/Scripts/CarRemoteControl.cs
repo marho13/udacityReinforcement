@@ -21,7 +21,7 @@ namespace UnityStandardAssets.Vehicles.Car
             s.Start();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             // If holding down W or S control the car manually
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))

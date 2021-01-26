@@ -3371,16 +3371,16 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284866812}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 1
+  m_Speed: 15
+  m_Acceleration: 1
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 180
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -3403,6 +3403,22 @@ MonoBehaviour:
   BLwheel: {fileID: 2069745131}
   BRwheel: {fileID: 119111115}
   CommandServer: {fileID: 656278958}
+--- !u!114 &284866816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284866812}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef6769909e288d4cb70b158c36f647b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {fileID: 1593068273}
+  - {fileID: 410702247}
+  - {fileID: 397718098}
 --- !u!1001 &288313568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6178,7 +6194,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 3
-  m_StaticEditorFlags: 4294967263
+  m_StaticEditorFlags: 4294967255
   m_IsActive: 1
 --- !u!154 &445614391
 TerrainCollider:
@@ -7118,6 +7134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 552778759}
   - component: {fileID: 552778760}
+  - component: {fileID: 552778761}
   m_Layer: 0
   m_Name: SegCar
   m_TagString: Player
@@ -7165,6 +7182,18 @@ MonoBehaviour:
   vehicle: {fileID: 284866812}
   offset: {x: 0, y: 0, z: 0}
   that: {x: 0, y: 0, z: 0}
+--- !u!114 &552778761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552778758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0064a51841da9374b893a8ee0a249fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &563542844 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 437110, guid: 4d9cb2c390cb4b24a857eafb457a8ce3,
@@ -17931,7 +17960,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1593068272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 209.47, y: -79.04, z: -44.68}
+  m_LocalPosition: {x: 203.05, y: -79.04, z: -44.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 827282635}
@@ -19153,6 +19182,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 100042, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -19179,7 +19212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400050, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -46.57
+      value: -43.91
       objectReference: {fileID: 0}
     - target: {fileID: 400050, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 3}
       propertyPath: m_LocalRotation.x
@@ -27537,7 +27570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9775766679dae7946854660fc6c05d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpointList: {fileID: 2027687965}
+  checkpointList: {fileID: 827282634}
   car: {fileID: 284866812}
   Listy: []
   checkpointInd: 0

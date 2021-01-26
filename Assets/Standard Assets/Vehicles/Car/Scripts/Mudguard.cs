@@ -19,7 +19,7 @@ namespace UnityStandardAssets.Vehicles.Car
         }
 
 
-        private void Update()
+        private void FixedUpdate()
         {
             transform.localRotation = m_OriginalRotation*Quaternion.Euler(0, carController.CurrentSteerAngle, 0);
         }

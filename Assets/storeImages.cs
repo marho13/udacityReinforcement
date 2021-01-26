@@ -44,7 +44,7 @@ public class storeImages : MonoBehaviour
         fileNameList.Add(timeName);
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Space)) 
         {

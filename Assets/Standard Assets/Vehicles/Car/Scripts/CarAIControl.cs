@@ -82,7 +82,7 @@ namespace UnityStandardAssets.Vehicles.Car
         }
 
 
-        private void FixedUpdate ()
+        private void Update ()
         {
             if (m_Target == null || !m_Driving) {
                 // Car should not be moving,
