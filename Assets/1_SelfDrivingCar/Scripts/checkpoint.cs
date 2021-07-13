@@ -1,55 +1,79 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Vehicles.Car;
 
 public class checkpoint : MonoBehaviour 
 {
     public GameObject checkpointList;
+    public GameObject Tasks;
     public GameObject car;
+
+    public Rigidbody carRigid;
+
     public List<GameObject> Listy;
-    public int checkpointInd = 0;
+    public List<GameObject> task;
+
+    private int taskInd = 0;
+    private int checkpointInd = 0;
     public int straightCheckpoints = 0;
     public int nonStraightCheckpoints = 0;
-    Vector3 offSet;
+
     Vector3 resetVector;
+    Vector3 randomVector;
+
     public CommandServer c;
     public List<Vector3> positionList;
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        Vector3 offSet = new Vector3(0, 1.5f, 0);
         Listy = checkpointList.GetAllChilds();
-        resetVector = Listy[0].transform.position + offSet;
+        task = Tasks.GetAllChilds();
+        resetVector = new Vector3(166.5f, -79.6200027f, -43.9099998f);
+        randomVector = new Vector3(0, 0, 0);
+        Debug.Log(Listy.Count);
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    public void checkpointComplete () {
         float distance = Vector3.Distance(Listy[checkpointInd].transform.position, car.transform.position);
-        if (distance <= 5.0)
+        if (distance <= 5.0f)
         {
-            if (Listy[checkpointInd].name.StartsWith("road_straight"))
+            Debug.Log("Crossed a new checkpoint");
+            if (Listy[checkpointInd].name.Contains("road_straight"))
             {
                 straightCheckpoints++;
                 c.rewardStraight();
+                setCheckpointInd();
             }
 
             else {
                 c.rewardCheckpoint();
                 nonStraightCheckpoints++;
+                setCheckpointInd();
             }
-            checkpointInd++;
         }
 	}
 
+    public void setCheckpointInd()
+    {
+        if (checkpointInd >= Listy.Count)
+        {
+            checkpointInd = 0;
+        }
+        else
+        {
+            checkpointInd = checkpointInd + 1;
+        }
+    }
     public bool stuckCheck() {
         if (positionList.Count > 300) {
             float stuckDist = Vector3.Distance(positionList[0], car.transform.position);
+            
             if (stuckDist < 5)
             {
                 positionList.Clear();
                 return true;
             }
+
             else {
                 positionList.RemoveAt(0);
                 positionList.Add(car.transform.position);
@@ -62,13 +86,37 @@ public class checkpoint : MonoBehaviour
 
     public void reset()
     {
-        car.transform.rotation = Listy[0].transform.rotation;
-        car.transform.position = resetVector;
-        car.transform.rotation = Listy[0].transform.rotation;
+        car.transform.rotation = Quaternion.Euler(0, 90, 0);
+        randomVector = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+        car.transform.position = resetVector + randomVector;
+        carRigid.velocity = Vector3.zero;
+        carRigid.angularVelocity = Vector3.zero;
+        positionList.Clear();
         straightCheckpoints = 0;
         nonStraightCheckpoints = 0;
         checkpointInd = 0;
-        ///_carController.CurrentSteerAngle.ToString("N4");
+    }
+
+    public void increaseTask() 
+    {
+        if (taskInd >= task.Count)
+        {
+            taskInd = 0;
+        }
+        else 
+        {
+            taskInd = taskInd + 1;
+        }
+    }
+
+    public bool taskComplete()
+    {
+        float taskDist = Vector3.Distance(task[taskInd].transform.position, car.transform.position);
+        if (taskDist <= 5.0f)
+        {
+            return true;
+        }
+        return false;
     }
 }
 

@@ -142,8 +142,9 @@ namespace SocketIO
 				wsConnected = ws.IsConnected;
 				if(wsConnected){
 					EmitEvent("connect");
-				} else {
-					EmitEvent("disconnect");
+				} 
+				else {
+					///EmitEvent("disconnect");
 				}
 			}
 
@@ -295,8 +296,8 @@ namespace SocketIO
 
 		private void EmitClose()
 		{
-			EmitPacket(new Packet(EnginePacketType.MESSAGE, SocketPacketType.DISCONNECT, 0, "/", -1, new JSONObject("")));
-			EmitPacket(new Packet(EnginePacketType.CLOSE));
+			//EmitPacket(new Packet(EnginePacketType.MESSAGE, SocketPacketType.DISCONNECT, 0, "/", -1, new JSONObject("")));
+			//EmitPacket(new Packet(EnginePacketType.CLOSE));
 		}
 
 		private void EmitPacket(Packet packet)

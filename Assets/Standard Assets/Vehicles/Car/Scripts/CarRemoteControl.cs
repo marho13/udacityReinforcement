@@ -20,8 +20,10 @@ namespace UnityStandardAssets.Vehicles.Car
             s = new Steering();
             s.Start();
         }
-
-        private void Update()
+        /// <summary>
+        /// Should rewrite the function to work based on functions not updates
+        /// </summary>
+        private void FixedUpdate()
         {
             // If holding down W or S control the car manually
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
@@ -31,6 +33,7 @@ namespace UnityStandardAssets.Vehicles.Car
             } else
             {
 				m_Car.Move(SteeringAngle, Acceleration, Acceleration, 0f);
+                
             }
         }
     }

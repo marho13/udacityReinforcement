@@ -8,17 +8,16 @@ public class CheckWheel : MonoBehaviour
         public GameObject FLwheel;
         public GameObject BLwheel;
         public GameObject BRwheel;
+        public GameObject divider;
+        public GameObject car;
         private int layer_mask;
+        private int collider_mask;
         public CommandServer CommandServer;
 
         private void Start()
         {
             layer_mask = LayerMask.GetMask("road");
-        }
-
-        private void FixedUpdate()
-        {
-            
+            collider_mask = LayerMask.GetMask("divider");
         }
 
     public void wheelRunner() {
@@ -26,6 +25,8 @@ public class CheckWheel : MonoBehaviour
         CommandServer.flWheel = checkWheels(FLwheel);
         CommandServer.brWheel = checkWheels(BRwheel);
         CommandServer.blWheel = checkWheels(BLwheel);
+        CommandServer.divider = dividerCheck(FLwheel);
+        ///CommandServer.Collide =  OnTriggerEnter(divider);
     }
         bool checkWheels(GameObject wheel)
         {
@@ -36,4 +37,17 @@ public class CheckWheel : MonoBehaviour
             }
             return (false);
         }
+
+        bool dividerCheck(GameObject car) {
+        Vector3 back = new Vector3(161.5f, -79.62f, -41.49f);
+        Vector3 front = new Vector3(212.5f, -79.62f, -41.49f);
+        if (car.transform.position.x > back.x & car.transform.position.x < front.x)
+        {
+            if ((car.transform.position.z - back.z) > 1.5f) {
+                return (true);
+            }
+        }
+        return (false);
     }
+}
+        

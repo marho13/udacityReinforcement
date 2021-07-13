@@ -16,15 +16,19 @@ public class CommandServer : MonoBehaviour
     public bool flWheel = false;
     public bool brWheel = false;
     public bool blWheel = false;
+    public bool divider = false;
     public bool Collide = false;
     public bool onRoad = true;
     public bool resetEnv = false;
+    public bool taskComplete = false;
     public int straightCheckpoint = 0;
     public int nonStraightCheckpoint = 0;
     public CheckWheel checky;
     public checkpoint checkpoint;
     public float reward = 0.0f;
     public int offRoadInt = 0;
+    public int taskCompletion = 0;
+    public timeVariance timey;
 
     // Use this for initialization
     void Start()
@@ -33,37 +37,49 @@ public class CommandServer : MonoBehaviour
 		_socket.On("open", OnOpen);
 		_socket.On("steer", OnSteer);
 		_socket.On("manual", onManual);
+        _socket.On("ready", OnReady);
 		_carController = CarRemoteControl.GetComponent<CarController>();
 	}
 
-	// Update is called once per frame
-	void FixedUpdate()
-	{
-       
-	}
+    void FixedUpdate()
+    {
+        checkpoint.checkpointComplete();
+    }
 
-	void OnOpen(SocketIOEvent obj)
+    void OnOpen(SocketIOEvent obj)
 	{
 		Debug.Log("Connection Open");
-		EmitTelemetry(obj);
+        EmitTelemetry(obj);
 	}
 
 	// 
 	void onManual(SocketIOEvent obj)
 	{
-		EmitTelemetry (obj);
+        EmitTelemetry (obj);
 	}
 
 	void OnSteer(SocketIOEvent obj)
 	{
-		JSONObject jsonObject = obj.data;
+        JSONObject jsonObject = obj.data;
 		//    print(float.Parse(jsonObject.GetField("steering_angle").str));
 		CarRemoteControl.SteeringAngle = float.Parse(jsonObject.GetField("steering_angle").str);
 		CarRemoteControl.Acceleration = float.Parse(jsonObject.GetField("throttle").str);
         checky.wheelRunner();
+        /*taskComplete = checkpoint.taskComplete();
+        if (taskComplete) 
+        {
+            Debug.Log("Resetting");
+                taskCompletion++;
+            if (taskCompletion > 30)
+            {
+                taskCompletion = 0;
+                checkpoint.increaseTask();
+            }
+            resetEnv = true;
+        }
+        */
         Collide = checkpoint.stuckCheck();
         wheelCheck();
-        Debug.Log(onRoad);
         EmitTelemetry(obj);
 	}
 
@@ -77,12 +93,12 @@ public class CommandServer : MonoBehaviour
 				_socket.Emit("telemetry", new JSONObject());
 			}
 			else {
-				// Collect Data from the Car
-				Dictionary<string, string> data = new Dictionary<string, string>();
-				data["steering_angle"] = _carController.CurrentSteerAngle.ToString("N4");
-				data["throttle"] = _carController.AccelInput.ToString("N4");
-				data["speed"] = _carController.CurrentSpeed.ToString("N4");
-				data["image"] = Convert.ToBase64String(CameraHelper.CaptureFrame(FrontFacingCamera));
+                // Collect Data from the Car
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                data["steering_angle"] = _carController.CurrentSteerAngle.ToString("N4");
+                data["throttle"] = _carController.AccelInput.ToString("N4");
+                data["speed"] = _carController.CurrentSpeed.ToString("N4");
+                data["image"] = Convert.ToBase64String(CameraHelper.CaptureFrame(FrontFacingCamera));
                 data["reward"] = reward.ToString();
                 data["checkpointStraight"] = straightCheckpoint.ToString();
                 data["checkpointNonStraight"] = nonStraightCheckpoint.ToString();
@@ -90,18 +106,40 @@ public class CommandServer : MonoBehaviour
                 data["resetEnv"] = resetEnv.ToString();
                 _socket.Emit("telemetry", new JSONObject(data));
 
+                
+
                 if (resetEnv) {
                     Debug.Log("reset");
+                    checkpoint.reset();
                     resetCheckpoints();
                     reward = 0.0f;
+                    timey.slowDown();
+                    resetEnv = false;
+                    /*if (!taskComplete)
+                    {
+                        if (taskCompletion > 0)
+                        {
+                            taskCompletion--;
+                        }
+                    }*/
                 }
-                resetEnv = false;
+
             }
 		});
 	}
 
+    void OnReady(SocketIOEvent obj) {
+        JSONObject jsonObject = obj.data;
+        resetEnv = false;
+        checkpoint.reset();
+        resetCheckpoints();
+        offRoadInt = 0;
+        timey.speedUp();
+        Debug.Log("Speeding up");
+    }
+
     public void rewardCheckpoint()
-    {
+    { 
         nonStraightCheckpoint++;
         reward += 7.0f;
     }
@@ -135,7 +173,7 @@ public class CommandServer : MonoBehaviour
 
     void wheelCheck()
     {
-        if (frWheel | flWheel | blWheel | brWheel)
+        if (frWheel | flWheel | blWheel | brWheel | divider)
         {
             offRoadInt++;
             onRoad = false;
@@ -143,15 +181,9 @@ public class CommandServer : MonoBehaviour
             if (offRoadInt >= 300)
             {
                 this.episodeReward();
-                checkpoint.reset();
+                
                 resetEnv = true;
                 offRoadInt = 0;
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
             }
 
             else
@@ -170,13 +202,8 @@ public class CommandServer : MonoBehaviour
             {
                 this.episodeReward();
                 Collide = false;
-                checkpoint.reset();
+
                 resetEnv = true;
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
-                _carController.Move(0.0f, 0.0f, 0.0f, 0.0f);
             }
 
             else
