@@ -6,7 +6,6 @@ using UnityEngine;
 public class SegCapture : MonoBehaviour
 {
     public static string folder = "D://Screenshots/SegImage/";
-    public string timeNow = "";
     private bool takeScreenshotOnNextFrame;
     private static SegCapture instance;
     
@@ -17,9 +16,6 @@ public class SegCapture : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        Debug.Log("Hey sexy");
-        //myCamera = gameObject.GetComponent<Camera>();
-        //myCamera.enabled = true;
     }
     public void OnPostRender()
     {
@@ -51,16 +47,13 @@ public class SegCapture : MonoBehaviour
     }
 
     private void TakeScreenshot(int width, int height, string time)
-    {
-        //Debug.Log("Onmyway");
-        timeNow = time;
+    {       
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
         takeScreenshotOnNextFrame = true;
     }
 
     public static void TakeScreenshot_Static(int width, int height, string time)
     {
-        //Debug.Log("Segmentation init");
         instance.TakeScreenshot(width, height, time);
     }
 }

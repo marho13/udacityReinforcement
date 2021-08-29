@@ -68,7 +68,6 @@ public class storeImages : MonoBehaviour
             {
                 captureImages(720, 480, imgNum.ToString());
                 yield return new WaitForSeconds(0.2f);
-                Debug.Log("Catupring");
             }
 
             SaveImages();

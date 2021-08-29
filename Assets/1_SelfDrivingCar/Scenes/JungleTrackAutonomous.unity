@@ -945,7 +945,7 @@ WheelCollider:
     m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1 &83944622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,7 +1646,7 @@ WheelCollider:
     m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1001 &172345758
 Prefab:
   m_ObjectHideFlags: 0
@@ -4224,7 +4224,7 @@ WheelCollider:
     m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1001 &365622682
 Prefab:
   m_ObjectHideFlags: 0
@@ -24015,9 +24015,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfc2cfde1eba9f4f9f882f7993f074a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  folder: D://Screenshots/SegImage/
-  timeNow: 
   myCamera: {fileID: 1958591300}
+  tempList: 
 --- !u!114 &1958591296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24343,7 +24342,7 @@ WheelCollider:
     m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1001 &1972062057
 Prefab:
   m_ObjectHideFlags: 0
